@@ -1,0 +1,23 @@
+name: Update WIBOR rates
+
+on:
+  schedule:
+    - cron: '30 16 * * 1-5' # pon-pt 16:30 UTC (po fixingu)
+  workflow_dispatch: # ręczne uruchomienie
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch WIBOR from Stooq
+        run: bash fetch.sh
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add *.json
+          git diff --cached --quiet || git commit -m "Update WIBOR rates $(date +%Y-%m-%d)"
+          git push
