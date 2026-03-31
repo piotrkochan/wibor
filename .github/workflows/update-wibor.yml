@@ -5,6 +5,9 @@ on:
     - cron: '30 16 * * 1-5' # pon-pt 16:30 UTC (po fixingu)
   workflow_dispatch: # ręczne uruchomienie
 
+permissions:
+  contents: write
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
