@@ -25,7 +25,7 @@ for TENOR in 1m 3m 6m; do
   fi
 
   URL="https://stooq.com/q/d/l/?s=plopln${TENOR}&d1=${D1}&d2=${D2}&i=d"
-  CSV=$(curl -sf "$URL")
+  CSV=$(curl -sf -A "Mozilla/5.0 (compatible; wibor-bot/1.0)" "$URL")
 
   if [ -z "$CSV" ] || echo "$CSV" | head -1 | grep -qi "brak"; then
     echo "SKIP $TENOR — brak nowych danych ze Stooq"
